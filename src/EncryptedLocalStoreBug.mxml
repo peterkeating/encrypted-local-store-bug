@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   initialize="showBug()">
+	
+	<fx:Script>
+		<![CDATA[
+			
+			private const KEY: String = "ExampleEncryptedLocalStoreBug";
+			
+			private function showBug(): void
+			{
+				// display the current run time version
+				airVersionLabel.text = "AIR Version: " + NativeApplication.nativeApplication.runtimeVersion;
+				
+				// retrieving the value that was stored in the encrypted local store.
+				var encryptedValue:ByteArray = EncryptedLocalStore.getItem(KEY);
+				
+				// if the value doesn't exist, lets create it.
+				if (encryptedValue == null) {
+					EncryptedLocalStore.setItem(KEY, makeSalt());
+					
+					createEncryptedValueLabel.text = "Newly created encrypted value.";
+					
+					// make another attempt to access from the encrypted local store. 
+					encryptedValue = EncryptedLocalStore.getItem(KEY);
+				}
+				else
+					createEncryptedValueLabel.text = "Encrypted value already existed."
+				
+				// show the encrypted value to the user.
+				encryptedValueLabel.text = "Encrypted Value: " + encryptedValue.toString();
+			}
+			
+			/**
+			 * Creates a random bytearray.
+			 */
+			private function makeSalt():ByteArray
+			{
+				var result:ByteArray = new ByteArray;
+				
+				for (var i:uint = 0; i < 8; i++)
+				{
+					result.writeUnsignedInt(Math.round(Math.random() * uint.MAX_VALUE));
+				}
+				
+				return result;
+			}
+			
+			/**
+			 * Removes the key allowing us to start 
+			 * with an empty encrypted local store.
+			 */
+			private function reset(): void
+			{
+				EncryptedLocalStore.removeItem(KEY);
+			}
+			
+			
+		]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:VerticalLayout paddingLeft="20" paddingTop="20" gap="20" />
+	</s:layout>
+	
+	<s:Label id="airVersionLabel" />
+	
+	<s:Label id="createEncryptedValueLabel" />
+	
+	<s:Label id="encryptedValueLabel"
+			 width="100%" />
+	
+	<s:Button id="refreshButton"
+			  label="Refresh"
+			  click="showBug()" />
+	
+	<s:Button id="resetButton"
+			  label="Reset the Encrypted Local Store."
+			  click="reset()" />
+		
+</s:WindowedApplication>
