@@ -20,7 +20,7 @@ You can download the installer for the sample application from the [downloads se
 
 ## Recreating the bug
 
-Run the application with AIR 3.3 (or any versions before), you should see that a value is created in the EncryptedLocalStore. Switch your AIR runtime to 3.4, you will see that once again a value has been created in the EncryptedLocalStore, this occurs because the AIR 3.4 runtime is unable to retrieve that value that was set in the EncryptedLocalStore by the 3.4 runtime. The example application creates a random value, so now switching between the different AIR runtimes means a different value is displayed.
+Run the application with AIR 3.3 (or any versions before), you should see that a value is created in the EncryptedLocalStore. Switch your AIR runtime to 3.4, you will see that once again a value has been created in the EncryptedLocalStore, this occurs because the AIR 3.4 runtime is unable to retrieve that value that was set in the EncryptedLocalStore by the 3.3 runtime. The example application creates a random value, so now switching between the different AIR runtimes means a different value is displayed.
 
 ## Expected Result
 
