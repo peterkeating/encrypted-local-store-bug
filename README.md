@@ -28,4 +28,6 @@ The values returned from the EncryptedLocalStore by the AIR 3.4 should be the sa
 
 ## Solution
 
-Currently isn't one.
+Solved :)
+
+Adobe have fixed the bug.
